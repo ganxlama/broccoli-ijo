@@ -43,4 +43,14 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
+// Hanya izinkan domain yang diinginkan
+app.use(cors({
+  origin: ['https://your-render-app-url.onrender.com']
+}));
+
+// Blokir akses langsung ke API key
+app.get('/api/chat', (req, res) => {
+  res.status(403).json({ error: 'Method not allowed' });
+});
+
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
